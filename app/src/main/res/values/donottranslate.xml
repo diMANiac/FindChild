@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string name="pref_user_key" translatable="false">user_key</string>
+
+</resources>
