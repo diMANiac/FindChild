@@ -9,6 +9,9 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName '1.0'
+        buildConfigField "String", "TAG", '"FindChild"'
+        buildConfigField "long", "TIME_DELAY_GPS", '1000' //миллисекунд (1 секунд)
+
     }
     buildTypes {
         release {

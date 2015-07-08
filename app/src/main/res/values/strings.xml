@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Где ребенок?</string>
     <string name="numberCode_hint">Код</string>
-    <string name="btn_ok">Ok</string>
+    <string name="btn_start">Запуск</string>
+    <string name="btn_stop">Остановить</string>
+    <string name="user_cod_format">Код: %s</string>
     <string name="err_edt_empty">Заполните</string>
 </resources>

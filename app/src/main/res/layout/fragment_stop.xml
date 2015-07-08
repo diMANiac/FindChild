@@ -10,25 +10,16 @@
         android:layout_gravity="center_vertical"
         android:orientation="vertical">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/til_numberCode"
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txt_userCode"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/edt_numberCode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/numberCode_hint"
-                android:inputType="number" />
-
-        </android.support.design.widget.TextInputLayout>
+            android:layout_height="wrap_content" />
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_start"
+            android:id="@+id/btn_stop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/btn_start" />
+            android:text="@string/btn_stop" />
 
     </LinearLayout>
 

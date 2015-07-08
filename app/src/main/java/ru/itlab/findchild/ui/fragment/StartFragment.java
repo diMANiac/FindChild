@@ -25,10 +25,10 @@ public class StartFragment extends Fragment {
     private String mUserKey;
 
     private AppCompatEditText mCodeEdit;
-    private AppCompatButton mOkButton;
+    private AppCompatButton mStartButton;
     private TextInputLayout mCodeTIL;
 
-    private OnInputUserKey mOnInputUserKey;
+    private OnStartService mOnStartService;
 
     public static StartFragment getInstance(String userKey) {
         StartFragment fragment = new StartFragment();
@@ -42,7 +42,7 @@ public class StartFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mOnInputUserKey = (OnInputUserKey) activity;
+            mOnStartService = (OnStartService) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement OnInputUserKey");
         }
@@ -69,9 +69,9 @@ public class StartFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mCodeEdit = (AppCompatEditText) view.findViewById(R.id.edt_numberCode);
         mCodeTIL = (TextInputLayout) view.findViewById(R.id.til_numberCode);
-        mOkButton = (AppCompatButton) view.findViewById(R.id.btn_ok);
-        if (mOkButton != null) {
-            mOkButton.setOnClickListener(onClickOkListener);
+        mStartButton = (AppCompatButton) view.findViewById(R.id.btn_start);
+        if (mStartButton != null) {
+            mStartButton.setOnClickListener(mOnClickOkListener);
         }
     }
 
@@ -94,22 +94,22 @@ public class StartFragment extends Fragment {
         return validate;
     }
 
-    private View.OnClickListener onClickOkListener = new View.OnClickListener() {
+    private View.OnClickListener mOnClickOkListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             if (mCodeEdit != null) {
                 String userKey = mCodeEdit.getText().toString();
                 if (isValidate(userKey)) {
-                    if (mOnInputUserKey != null) {
-                        mOnInputUserKey.onInputUserKey(userKey);
+                    if (mOnStartService != null) {
+                        mOnStartService.onStartService(userKey);
                     }
                 }
             }
         }
     };
 
-    public interface OnInputUserKey {
-        void onInputUserKey(String userKey);
+    public interface OnStartService {
+        void onStartService(String userKey);
     }
 
 }
