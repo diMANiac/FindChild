@@ -17,7 +17,7 @@ import ru.itlab.findchild.ui.fragment.StopFragment;
 /**
  * @author Павел Аннин, 08.07.2015.
  */
-public class StartActivity extends AppCompatActivity
+public class StartActivity extends PlayServiceActivity
         implements StartFragment.OnStartService, StopFragment.OnStopService {
 
     private Toolbar mToolbar;

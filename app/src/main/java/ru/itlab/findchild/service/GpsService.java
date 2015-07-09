@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -13,11 +12,15 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.path.android.jobqueue.JobManager;
 
 import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
+import ru.itlab.findchild.App;
 import ru.itlab.findchild.BuildConfig;
+import ru.itlab.findchild.job.GpsRequestJob;
 
 public class GpsService extends Service
         implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
@@ -29,6 +32,7 @@ public class GpsService extends Service
     private Location mCurrentLocation;
     private Boolean mRequestingLocationUpdates;
     private String mLastUpdateTime;
+    private JobManager mJobManager;
 
 
     @Override
@@ -42,8 +46,7 @@ public class GpsService extends Service
         if (BuildConfig.DEBUG) Log.i(BuildConfig.TAG, "Инициализация сервиса");
         mRequestingLocationUpdates = true;
         mLastUpdateTime = "";
-        //jobManager = ((SeconApplication) getApplication()).getJobManager();
-        gpsHandler.post(gpsTask);
+        mJobManager = App.getInstance().getJobManager();
         buildGoogleApiClient();
         mGoogleApiClient.connect();
         if (mGoogleApiClient.isConnected() && mRequestingLocationUpdates) {
@@ -54,7 +57,6 @@ public class GpsService extends Service
 
     @Override
     public void onDestroy() {
-        gpsHandler.removeCallbacks(gpsTask);
         if (mGoogleApiClient.isConnected()) {
             stopLocationUpdates();
         }
@@ -98,18 +100,19 @@ public class GpsService extends Service
                     mCurrentLocation.getLongitude(),
                     mLastUpdateTime
             ));
+            if (mJobManager != null) {
+                GpsRequestJob.Param param = new GpsRequestJob.Param(
+                        App.getInstance().getUserKey(),
+                        mCurrentLocation.getLatitude(),
+                        mCurrentLocation.getLongitude(),
+                        mCurrentLocation.getAltitude()
+                );
+
+                mJobManager.addJob(new GpsRequestJob(param));
+            }
         }
     }
 
-    private Handler gpsHandler = new Handler();
-    private Runnable gpsTask = new Runnable() {
-        @Override
-        public void run() {
-            if (BuildConfig.DEBUG) Log.i(BuildConfig.TAG, "Определение кооринатов GPS");
-            //jobManager.addJobInBackground(new DownloadDataJob(TypeModelEnum.TRACKS));
-           // gpsHandler.postDelayed(gpsTask, BuildConfig.TIME_DELAY_GPS);
-        }
-    };
 
     @Override
     public void onConnected(Bundle bundle) {
