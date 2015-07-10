@@ -1,7 +1,7 @@
 package ru.itlab.findchild.job;
 
-import android.location.Location;
 import android.util.Log;
+
 import com.path.android.jobqueue.Job;
 import com.path.android.jobqueue.Params;
 
@@ -11,7 +11,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.Date;
+import java.util.Locale;
 
 import ru.itlab.findchild.BuildConfig;
 
@@ -92,7 +92,8 @@ public class GpsRequestJob extends Job {
         @Override
         public String toString() {
             return String.format(
-                    "user_uuid=%s&x=%f&y=%f&z=%f",
+                    Locale.ENGLISH,
+                    "position[user_id]=%s&position[x]=%f&position[y]=%f&position[z]=%f",
                     mUserCode,
                     mLatitude,
                     mLongitude,

@@ -11,7 +11,7 @@ android {
         versionName '0.0.1'
         buildConfigField "String", "TAG", '"FindChild"'
         buildConfigField "long", "TIME_DELAY_GPS", '10000'          //миллисекунд (10 секунд)
-        buildConfigField "String", "URL_REQUEST_GPS", '"http://"'
+        buildConfigField "String", "URL_REQUEST_GPS", '"http://whereismychild.herokuapp.com/positions"'
 
     }
     buildTypes {
